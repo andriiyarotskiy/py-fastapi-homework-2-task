@@ -3,7 +3,6 @@ from typing import List, Optional
 
 from dateutil.relativedelta import relativedelta
 from pydantic import BaseModel, Field, PositiveFloat, create_model
-from pydantic_extra_types.country import CountryAlpha2
 
 from database.models import MovieStatusEnum
 
@@ -65,7 +64,7 @@ class MovieDetailSchema(MovieBaseSchema):
 
 
 class MovieCreateSchema(MovieBaseSchema):
-    country: CountryAlpha2
+    country: str
     genres: List[str]
     actors: List[str]
     languages: List[str]
