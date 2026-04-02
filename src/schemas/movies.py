@@ -2,7 +2,7 @@ import datetime
 from typing import List, Optional
 
 from dateutil.relativedelta import relativedelta
-from pydantic import BaseModel, Field, PositiveFloat, create_model
+from pydantic import BaseModel, Field, NonNegativeFloat, create_model
 
 from database.models import MovieStatusEnum
 
@@ -26,11 +26,11 @@ class MovieListResponseSchema(BaseModel):
 class MovieBaseSchema(BaseModel):
     name: str = Field(max_length=255)
     date: datetime.date = Field(lt=datetime.date.today() + relativedelta(years=1))
-    score: PositiveFloat = Field(le=100, description="0..100")
+    score: NonNegativeFloat = Field(le=100, description="0..100")
     overview: str
     status: MovieStatusEnum
-    budget: PositiveFloat
-    revenue: PositiveFloat
+    budget: NonNegativeFloat
+    revenue: NonNegativeFloat
 
 
 class GenreReadSchema(BaseModel):

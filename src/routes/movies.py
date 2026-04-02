@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from database import get_db, MovieModel
-from database.models import GenreModel, ActorModel, LanguageModel, CountryModel
+from database.models import GenreModel, ActorModel, LanguageModel
 from routes.helpers import get_or_create_many, get_or_create_country
 from schemas.movies import (
     MovieListResponseSchema,
@@ -19,7 +19,7 @@ router = APIRouter(prefix="/movies")
 @router.get("/", response_model=MovieListResponseSchema)
 async def get_movies(
     page: int = Query(1, ge=1),
-    per_page: int = Query(10, ge=1, le=100),
+    per_page: int = Query(10, ge=1, le=20),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, MovieListResponseSchema]:
     result = await db.execute(
