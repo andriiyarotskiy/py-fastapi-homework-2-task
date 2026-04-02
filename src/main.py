@@ -11,8 +11,9 @@ api_version_prefix = "/api/v1"
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    if request.method == "POST" and request.url.path.startswith(
-        "/api/v1/theater/movies"
+    if (
+            (request.method == "POST" or request.method == "PATCH")
+            and request.url.path.startswith("/api/v1/theater/movies")
     ):
         return JSONResponse(status_code=400, content={"detail": "Invalid input data."})
     return JSONResponse(status_code=422, content={"detail": exc.errors()})

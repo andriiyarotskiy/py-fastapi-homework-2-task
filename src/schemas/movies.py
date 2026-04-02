@@ -1,3 +1,4 @@
+from copy import copy
 import datetime
 from typing import List, Optional
 
@@ -73,7 +74,10 @@ class MovieCreateSchema(MovieBaseSchema):
 def make_optional(model):
     fields = {}
     for name, field in model.model_fields.items():
-        fields[name] = (Optional[field.annotation], None)
+        new_field = copy(field)
+        new_field.default = None
+        new_field.annotation = Optional[field.annotation]
+        fields[name] = (Optional[field.annotation], new_field)
     return create_model(model.__name__, **fields)
 
 
